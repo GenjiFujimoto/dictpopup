@@ -17,8 +17,8 @@ if [ "$1" = "html"  ]; then
       word=${2:-$(sselp)}
       sdcv -n --utf8-output -e "$word" | format_output | 
 	lynx -dump -stdin -assume_charset=UTF-8 -display_charset=UTF-8 | 
-	popup
+	xargs -0 popup
 else
       word=${1:-$(sselp)}
-      sdcv -n --utf8-output -e "$word" | format_output | popup
+      sdcv -n --utf8-output -e "$word" | format_output | xargs -0 popup
 fi
