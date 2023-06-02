@@ -8,22 +8,21 @@ all: options dictpopup
 options:
 	@echo popup build options:
 	@echo "CFLAGS   = $(CFLAGS)"
-	@echo "LDFLAGS  = $(LDFLAGS)"
 	@echo "CC       = $(CC)"
 
 config.h:
 	cp config.def.h config.h
 
 .c.o:
-	$(CC) -c $(CFLAGS) $<
+	$(CC) -c $(CFLAGS) `pkg-config --cflags gtk+-3.0` $<
 
 popup.o: config.h
 
 $(OBJ): config.h config.mk
 
 dictpopup: $(OBJ)
-	$(CC) -o format_output format_output.o
-	$(CC) -o popup popup.o $(LDFLAGS)
+	$(CC) -o format_output format_output.o 
+	$(CC) -o popup `pkg-config --libs gtk+-3.0` popup.o 
 
 clean:
 	rm -f popup $(OBJ) format_output
